@@ -2,5 +2,5 @@
   hosts: mongodb
   become: yes
 
-  roles:
+  roles: # here it will load the folder called roles in current working directory
   - mongodb
