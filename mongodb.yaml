@@ -1,0 +1,5 @@
+- name: configure mongodb microservice
+  hosts: mongodb
+  become: yes
+
+  roles:
