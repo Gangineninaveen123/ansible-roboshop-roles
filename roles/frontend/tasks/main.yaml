@@ -1,0 +1,59 @@
+- name: disable default nginx
+  ansible.builtin.command: dnf module disable nginx -y
+
+- name: enable nginx:1.24 version
+  ansible.builtin.command: dnf module enable nginx:1.24 -y
+
+- name: install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+# start and enable nginx
+- name: start and enable nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes   
+# removing default content in nginx -> html file or directory
+- name: Remove default Nginx html file or directory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html  # Common path for default Nginx content
+    state: absent  
+# creating html directory and pasting our own content
+- name: create html directory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: directory
+
+#downloading front end code
+- name: downloading frontend code
+  ansible.builtin.get_url:
+    url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+    dest: /tmp/frontend.zip
+
+# this module - unarchive thinks file exits on ansible control server, but needs to extract on remote machine[ frontend server]
+# remote_src: yes , means here file is already exist in frontend server
+- name: unzipping the frontend code into /usr/share/nginx/html  directory
+  ansible.builtin.unarchive:
+    src: /tmp/frontend.zip
+    dest: /usr/share/nginx/html
+    remote_src: yes       
+# removing nginx conf file , so we can create a new conf file and copy the the new content
+- name: Remove etc/nginx/nginx.conf file
+  ansible.builtin.file:
+    path: /etc/nginx/nginx.conf  # Common path for default Nginx content
+    state: absent 
+    # copying the new content on nginx.conf
+- name: copy roboshob nginx conf file
+  ansible.builtin.template:
+    src: nginx.conf.j2  # here j2 - jinja2 is not mandatory, but it ll usefull when interviewers sees , its helpfull
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - Restart nginx # we are telling to nginx that whwn ever there is change in nginx.conf file, then only you need to restart the nginx , with the help of [handlers]..........., in handlers folder main.yaml ll restart the nginx, when there is a change in nginx.conf file..., due to no delay in production
+
+# restarting nginx this is in handlers folder
+
+
+  
+      

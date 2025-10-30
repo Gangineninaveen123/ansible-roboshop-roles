@@ -1,0 +1,4 @@
+- name: Restart nginx  # which we have given in task - main.yaml file , in nginx.conf setup
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
