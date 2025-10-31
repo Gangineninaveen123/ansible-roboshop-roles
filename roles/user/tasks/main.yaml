@@ -1,0 +1,15 @@
+
+- name: app_setup # app setup - system user, downloading code and unzipping
+  include_role:
+    name: common
+    tasks_from: app_setup
+
+- name: nodejs # installing nodejs
+  include_role:
+    name: common
+    tasks_from: nodejs
+
+- name: systemd setup
+  include_role:
+    name: common
+    tasks_from: systemd

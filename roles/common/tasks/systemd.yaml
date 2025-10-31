@@ -1,9 +1,9 @@
 # Creating servive file for catalogue and this an task,
 
-- name: copy catalogue service to /etc/systemd/system/catalogue.service location
+- name: "copy {{ component }} service to /etc/systemd/system/catalogue.service location"
   ansible.builtin.template:  #we have changed copy to template in module, because of we are using catalogue .service in this templates folder
-    src: catalogue.service.j2
-    dest: /etc/systemd/system/catalogue.service
+    src: "{{ component }}.service.j2"
+    dest: "/etc/systemd/system/{{ component }}.service"
 
 #deamon reload
 - name: daemon reload - systemd - systemctl
@@ -11,8 +11,8 @@
     daemon_reload: true
 
 # start and enable catalogue service
-- name: start and enable catalogue service
+- name: start and enable {{ component }} service
   ansible.builtin.service:
-    name: catalogue
+    name: "{{ component }}"
     state: restarted #even if app is not running we can restart it
     enabled: yes
