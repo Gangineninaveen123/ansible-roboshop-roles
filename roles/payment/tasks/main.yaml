@@ -1,0 +1,17 @@
+- name: app-setup from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
+  include_role:
+    name: common
+    tasks_from: app-setup
+
+- name: python setup
+  include_role:
+    name: common
+    tasks_from: python-setup
+
+
+- name: service file systemd setup
+  include_role:
+    name: common
+    tasks_from: systemd
+
+

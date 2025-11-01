@@ -1,0 +1,5 @@
+CART_HOST: cart.muruga.site
+USER_HOST: user.muruga.site
+RABBITMQ_HOST: rabbitmq.muruga.site
+RABBITMQ_USER: roboshob
+RABBITMQ_PASSWORD: roboshop123
