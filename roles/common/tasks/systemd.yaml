@@ -1,6 +1,6 @@
 # Creating servive file for catalogue and this an task,
 
-- name: "copy {{ component }} service to /etc/systemd/system/catalogue.service location"
+- name: copy {{ component }} service to /etc/systemd/system/catalogue.service location
   ansible.builtin.template:  #we have changed copy to template in module, because of we are using catalogue .service in this templates folder
     src: "{{ component }}.service.j2"
     dest: "/etc/systemd/system/{{ component }}.service"

@@ -12,4 +12,4 @@
 - name: systemd setup # service file
   include_role:
     name: common
-    tasks_from: systemd
+    tasks_from: systemd.yaml
