@@ -1,0 +1,26 @@
+- name: copy rabbitmq repo to /etc/yum.repos.d/rabbitmq.repo location
+  ansible.builtin.copy:
+    src: rabbitmq.repo
+    dest: /etc/yum.repos.d/rabbitmq.repo
+
+
+- name: Install rabbitmq server
+  ansible.builtin.package:
+    name: rabbitmq-server
+    state: present
+
+- name: Start and enabled rabbitmq-server
+  ansible.builtin.service:
+      name: rabbitmq-server
+      state: started
+      enabled: yes
+#RabbitMQ comes with a default username / password as guest/guest. But this user cannot be used to connect. Hence, we need to create one user for the application.
+- name: Create rabbitmq server and set the permissions for it
+  community.rabbitmq.rabbitmq_user:
+    user: roboshop
+    password: roboshop123
+    vhost: /
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
