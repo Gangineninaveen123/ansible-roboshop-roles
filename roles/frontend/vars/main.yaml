@@ -1,3 +1,4 @@
 CATALOGUE_HOST: catalogue.muruga.site
 USER_HOST: user.muruga.site
 CART_HOST: cart.muruga.site
+SHIPPING_HOST: shipping.muruga.site
