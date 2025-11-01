@@ -2,7 +2,7 @@
 - name: app_setup # app setup - system user, downloading code and unzipping
   include_role:
     name: common
-    tasks_from: app_setup
+    tasks_from: app-setup
 
 - name: nodejs # installing nodejs
   include_role:
@@ -12,4 +12,4 @@
 - name: systemd setup # service file
   include_role:
     name: common
-    tasks_from: systemd.yaml
+    tasks_from: systemd
