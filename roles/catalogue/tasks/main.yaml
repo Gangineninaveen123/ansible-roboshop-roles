@@ -1,4 +1,7 @@
-
+- name: app-setup
+  include_role:
+    name: common
+    tasks_from: app-setup
 
 - name: nodejs from common tasks in roles folder # calling nodejs file in [common\tasks] to [catalogue\tasks]
   include_role:
