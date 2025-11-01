@@ -1,0 +1,38 @@
+- name: app-setup from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
+  include_role:
+    name: common
+    tasks_from: app-setup
+
+- name: maven setup
+  include_role:
+    name: common
+    tasks_from: maven
+
+# Import data into MySQL database through my sql client
+- name: Import data into MySQL database through my sql client
+  # tags:  # this tag means , it ll run specically this, because we got error, so making like this, 
+  # - import
+  community.mysql.mysql_db:
+    name: all # importing all the mentioned in loop
+    login_user: "{{ MYSQL_ROOT_USER }}"  #root - user  #my sql client is connecting to mysql server through root access......
+    login_password: "{{ MYSQL_ROOT_PASSWORD }}"  #RoboShop@1 - password
+    login_host: "{{ MYSQL_HOST }}"
+    state: import
+    target: "{{ item }}"
+  loop:
+  - /app/db/schema.sql
+  - /app/db/app-user.sql
+  - /app/db/master-data.sql
+
+- name: service file systemd setup
+  include_role:
+    name: common
+    tasks_from: systemd
+
+- name: Restart shipping
+  tags:
+  - import
+  ansible.builtin.service:
+    name: shipping
+    state: restarted
+

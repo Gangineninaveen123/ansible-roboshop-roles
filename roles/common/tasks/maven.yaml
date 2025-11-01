@@ -1,0 +1,27 @@
+- name: Install Maven and mysql client # which takes care of java installation automatically
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - maven                
+  - mysql
+    
+# [PyMySQL] # here, wjile connecting the mysql db by msql client got error in line [69-75], beacause of ansible is developed by python, hence we are downloading it
+- name: install PyMySQL and cryptography
+  ansible.builtin.pip:
+    name: "{{ item }}"  
+    executable: pip3.9
+  loop:
+  - cryptography          # while connecting the mysql db by msql client got error, in output, so package needs to be install
+  - PyMySQL               #here PyMySQL , its an requriemnt to run the code, from error
+
+# changing specific directory to install mvn clean package and comes back from that directoiry.....
+- name: Install maven dependencies
+  ansible.builtin.command: mvn clean package 
+  args:
+    chdir: /app
+
+- name: renaming jar file
+  ansible.builtin.command:  "mv target/{{ component }}-1.0.jar {{ component }}.jar"
+  args:  # used this because , it should run in this location and comes back from /app directory, once the action is completed
+      chdir: /app
