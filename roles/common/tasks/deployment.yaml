@@ -1,0 +1,40 @@
+# while deploying the app with new version, so microservices present in that app also need new versions, so in down time, we ll do the below process for the microservices, with the help of *** ansible tags *****
+# note ----> It can work for all the applications, it can be java, python, nodejs etc, so no issues  at all....
+# 1) stopping the serice
+- name: stop the service
+  ansible.builtin.service:
+    name: "{{ component }}"
+    state: stopped
+
+# 2) -> Removing old code means removing /app directory and creates a new /app directory and downloads the new version code
+
+- name: Remove /app directory
+  ansible.builtin.file:
+    path: /app
+    state: absent
+
+# creating new /app directory to inatall new version code
+- name: Creating new /app directory
+  ansible.builtin.file:
+    path: /app
+    state: directory
+
+# 3) ->Unarchive means, it doenloads the url to destination /app directory and unzips the code here...,  downloading new version app -> means microservices in app new versions.....
+
+- name: Downloading new version application
+  ansible.builtin.unarchive:
+    src: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v{{ app_version }}.zip"
+    dest: /app
+    remote_src: yes
+# 4) -> installing dependencies, if some new libraries installed by developers
+# for npm dependencies, the is no ansibile module, but community module is there
+- name: Install dependencies for npm 
+  community.general.npm:
+    path: /app
+
+# 5) -> restarting the service
+
+- name: Restarting the microservice {{ component }}
+  ansible.builtin.service:
+    name: "{{ component }}"
+    state: restarted

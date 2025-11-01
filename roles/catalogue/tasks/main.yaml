@@ -1,8 +1,4 @@
-#calling common code from [common\tasks] to [catalogue\tasks]
-- name: app-setup from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
-  include_role:
-    name: common
-    tasks_from: app-setup
+
 
 - name: nodejs from common tasks in roles folder # calling nodejs file in [common\tasks] to [catalogue\tasks]
   include_role:
@@ -48,6 +44,13 @@
     name: common
     tasks_from: systemd
 
+#calling common code from [common\tasks] to [catalogue\tasks]
+- name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
+  tags:
+  - deployment
+  include_role:
+    name: common
+    tasks_from: deployment
 
 
 
