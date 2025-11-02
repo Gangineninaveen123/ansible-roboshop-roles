@@ -1,7 +1,7 @@
 - name: configure microservice {{ component }}  # {{ component }} , will be placed dynamically through command line.
   hosts: "{{ component }}"
   become: yes
-  vars_files:
-  - vault/mysql.yaml
+  # vars_files:
+  # - vault/mysql.yaml # here in vault, mysql.yaml, the password has been given in server and safe..
   roles: # here it will load the folder called roles in current working directory
   - "{{ component }}"
