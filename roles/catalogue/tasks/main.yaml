@@ -54,8 +54,8 @@
 
 #calling common code from [common\tasks] to [catalogue\tasks] -> this ill exuecute at runtime, no preprocess ll not happen
 - name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
-  # tags:
-  # - deployment
+  tags:
+  - deployment
   include_role:
     name: common
     tasks_from: deployment

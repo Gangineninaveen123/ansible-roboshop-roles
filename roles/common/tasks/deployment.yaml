@@ -2,6 +2,8 @@
 # note ----> It can work for all the applications, it can be java, python, nodejs etc, so no issues  at all....
 # 1) stopping the serice
 - name: stop the service
+  tags:
+  - deployment
   ansible.builtin.service:
     name: "{{ component }}"
     state: stopped
@@ -29,6 +31,8 @@
 # 4) -> installing dependencies, if some new libraries installed by developers
 # for npm dependencies, the is no ansibile module, but community module is there
 - name: Install dependencies for npm 
+  tags:
+  - deployment
   community.general.npm:
   path: /app
 
