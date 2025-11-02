@@ -35,14 +35,14 @@
 
 # load products in mongodb server if [stdout": "-1"] -> stdout less than 0, if greater than zero means products already loaded
 
-- name: load products into mongodb server
-  # the downside if use command module, it ll not work, because, special character like input, piping and variables ll not work in the command module, so we are using [shell module]
-  ansible.builtin.shell: mongosh --host mongodb.muruga.site </app/db/master-data.js
-  # here in below when contion, the catalogue output ll come as string, so just convert it to integer, serch in google like, convert a string to int in single line for ansible...
-  when: catalogue_output.stdout | int < 0
-  ignore_errors: true
-  ignore_unreachable: true
-  
+# - name: load products into mongodb server
+#   # the downside if use command module, it ll not work, because, special character like input, piping and variables ll not work in the command module, so we are using [shell module]
+#   ansible.builtin.shell: mongosh --host mongodb.muruga.site </app/db/master-data.js
+#   # here in below when contion, the catalogue output ll come as string, so just convert it to integer, serch in google like, convert a string to int in single line for ansible...
+#   when: catalogue_output.stdout | int < 0
+#   ignore_errors: true
+#   ignore_unreachable: true
+
 - name: systemd setup from common tasks in roles folder # calling nodejs file in [common\tasks] to [catalogue\tasks]
   include_role:
     name: common
