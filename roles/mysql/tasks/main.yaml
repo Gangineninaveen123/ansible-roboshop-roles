@@ -11,8 +11,8 @@
 #install boto3 and botocore dependencies, which is used to connect SSM PARAMETER STORE, with out any error, for taking the mysql_root_password
 - name: install boto3 and botocore
   ansible.builtin.pip:
-    name: {{ item }}
-  executable: pip3.9
+    name: "{{ item }}"
+    executable: pip3.9
   loop:
   - boto3
   - botocore
