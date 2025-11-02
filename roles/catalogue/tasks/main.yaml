@@ -21,17 +21,17 @@
     name: mongodb-mongosh
     state: present
 
-# load the products data to mongo db
+# # load the products data to mongo db
 
-- name: Check load products data or not
-  ansible.builtin.command: mongosh --host mongodb.muruga.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
-  register: catalogue_output
+# - name: Check load products data or not
+#   ansible.builtin.command: mongosh --host mongodb.muruga.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+#   register: catalogue_output
 
-# printing above catalogue_output
+# # printing above catalogue_output
 
-- name: print catalogue output
-  ansible.builtin.debug:
-    msg: "{{ catalogue_output }}"
+# - name: print catalogue output
+#   ansible.builtin.debug:
+#     msg: "{{ catalogue_output }}"
 
 # load products in mongodb server if [stdout": "-1"] -> stdout less than 0, if greater than zero means products already loaded
 
