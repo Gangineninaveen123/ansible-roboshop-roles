@@ -53,20 +53,20 @@
     tasks_from: systemd
 
 #calling common code from [common\tasks] to [catalogue\tasks] -> this ill exuecute at runtime, no preprocess ll not happen
-- name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
-  tags:
-  - deployment
-  include_role:
-    name: common
-    tasks_from: deployment
-
-# import_role -> ll tell before executing the playbook, it is applicable for all the tasks present in in the playbook, even, its an preprocess, and not in the runtime....
 # - name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
 #   tags:
 #   - deployment
-#   import_role:
+#   include_role:
 #     name: common
 #     tasks_from: deployment
+
+# import_role -> ll tell before executing the playbook, it is applicable for all the tasks present in in the playbook, even, its an preprocess, and not in the runtime....
+- name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
+  tags:
+  - deployment
+  import_role:
+    name: common
+    tasks_from: deployment
 
 
 
