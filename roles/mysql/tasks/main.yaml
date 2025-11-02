@@ -10,4 +10,4 @@
     enabled: true
 
 - name: setup root passowrd in order to start using the database service. Use password RoboShop@1 or any other as per your choice.
-  ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
+  ansible.builtin.command: mysql_secure_installation --set-root-pass {{ MYSQL_ROOT_PASSWORD }}
