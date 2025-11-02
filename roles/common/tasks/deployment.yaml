@@ -23,7 +23,7 @@
 
 - name: Downloading new version application
   ansible.builtin.unarchive:
-    src: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v{{ app_version }}.zip"
+    src: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v{{ app_version }}.zip" # this app version can be given in run time remember
     dest: /app
     remote_src: yes
 # 4) -> installing dependencies, if some new libraries installed by developers
