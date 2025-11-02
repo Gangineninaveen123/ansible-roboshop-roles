@@ -30,7 +30,7 @@
 # for npm dependencies, the is no ansibile module, but community module is there
 - name: Install dependencies for npm 
   community.general.npm:
-    path: /app
+  path: /app
 
 # 5) -> restarting the service
 
