@@ -26,16 +26,16 @@
 - name: Check load products data or not
   ansible.builtin.command: mongosh --host mongodb.muruga.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
   register: catalogue_output
-  ignore_errors: true
-  ignore_unreachable: true
+  # ignore_errors: true
+  # ignore_unreachable: true
 
 # # printing above catalogue_output
 
 - name: print catalogue output
   ansible.builtin.debug:
     msg: "{{ catalogue_output }}"
-  ignore_errors: true
-  ignore_unreachable: true
+  # ignore_errors: true
+  # ignore_unreachable: true
 
 # load products in mongodb server if [stdout": "-1"] -> stdout less than 0, if greater than zero means products already loaded
 
@@ -44,8 +44,8 @@
   ansible.builtin.shell: mongosh --host mongodb.muruga.site </app/db/master-data.js
   # here in below when contion, the catalogue output ll come as string, so just convert it to integer, serch in google like, convert a string to int in single line for ansible...
   when: catalogue_output.stdout | int < 0
-  ignore_errors: true
-  ignore_unreachable: true
+  # ignore_errors: true
+  # ignore_unreachable: true -> these two ansible modules works for the error handling, so we can skip, when error comes.....
 
 - name: systemd setup from common tasks in roles folder # calling nodejs file in [common\tasks] to [catalogue\tasks]
   include_role:
