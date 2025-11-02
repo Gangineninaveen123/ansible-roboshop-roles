@@ -27,6 +27,7 @@
   ansible.builtin.command: mongosh --host mongodb.muruga.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
   register: catalogue_output
   ignore_errors: true
+  ignore_unreachable: true
 
 # # printing above catalogue_output
 
@@ -34,6 +35,7 @@
   ansible.builtin.debug:
     msg: "{{ catalogue_output }}"
   ignore_errors: true
+  ignore_unreachable: true
 
 # load products in mongodb server if [stdout": "-1"] -> stdout less than 0, if greater than zero means products already loaded
 
@@ -50,14 +52,21 @@
     name: common
     tasks_from: systemd
 
-#calling common code from [common\tasks] to [catalogue\tasks]
+#calling common code from [common\tasks] to [catalogue\tasks] -> this ill exuecute at runtime, no preprocess ll not happen
+# - name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
+#   tags:
+#   - deployment
+#   include_role:
+#     name: common
+#     tasks_from: deployment
+
+# import_role -> ll tell before executing the playbook, it is applicable for all the tasks present in in the playbook, even, its an preprocess, and not in the runtime....
 - name: deployment from common tasks in roles folder # calling app_setup file in [common\tasks] to [catalogue\tasks]
   tags:
   - deployment
-  include_role:
+  import_role:
     name: common
     tasks_from: deployment
-
 
 
 
