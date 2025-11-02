@@ -8,6 +8,14 @@
     name: mysqld
     state: started
     enabled: true
+#install boto3 and botocore dependencies, which is used to connect SSM PARAMETER STORE, with out any error, for taking the mysql_root_password
+- name: install boto3 and botocore
+  ansible.builtin.pip:
+    name: {{ item }}
+  executable: pip3.9
+  loop:
+  - boto3
+  - botocore
 
 - name: setup root passowrd in order to start using the database service. Use password RoboShop@1 or any other as per your choice.
   ansible.builtin.command: mysql_secure_installation --set-root-pass {{ MYSQL_ROOT_PASSWORD }}
